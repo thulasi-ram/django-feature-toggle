@@ -1,0 +1,49 @@
+Changelog
+=========
+
+
+(0.1.1)
+------------
+- Just bumping the version number to reflect in pip. [Thulasiram]
+
+
+(0.1)
+------------
+- Added gitchangelog package. [Thulasiram]
+- Added initial requirements and changes files. [Thulasiram]
+- Updated docs for commit:6ba3b6668abe48d9a26c73de162990c9bdc368d7
+  flexible custom choices. [Thulasiram]
+- New flexible custom choices for Environments and Attributes.
+  [Thulasiram]
+- Pulled wiki updates. [Thulasiram]
+- Pulled wiki updates. [Thulasiram]
+- Changed wiki docs, added more context. [Thulasiram]
+- Added wiki as a submodule back. [Thulasiram]
+- Removed wiki as a submodule. [Thulasiram]
+- Removed sphinx from install requirement as it is only used for making
+  docs. [Thulasiram]
+- Changed email in setup. [Thulasiram]
+- Changed validators to have support for django version less than 1.11.
+  Now known till 1.8, and add instal_requires in setup. [Thulasiram]
+- Changed wiki home to point to usage and readme. [Thulasiram]
+- Changed sphinx to point to wiki. [Thulasiram]
+- Pulled wiki and added Usage doc. [Thulasiram]
+- Merged in wiki-as-submodule (pull request #1) [Thulasiram]
+
+  Wiki as submodule
+- Pulled wiki. [Thulasiram]
+- Changed wiki home to rst. [Thulasiram]
+- Added wiki as a submodule. [Thulasiram]
+- Removed submodule at wrong location. [Thulasiram]
+- Removed submodule at wrong location. [Thulasiram]
+- Added sphinx autodoc related changes. [Thulasiram]
+- Added sphinx autodoc related changes. [Thulasiram]
+- Added sphinx related changes. [Thulasiram]
+- Added sphinx related changes. [Thulasiram]
+- Corrected URL in setup.py and installation doc. [Thulasiram]
+- Corrected URL in setup.py and installation doc. [Thulasiram]
+- Added gitignore and changed url in setup.py. [Thulasiram]
+- Removed pyc files. [Thulasiram]
+- Initial commit. [Thulasiram]
+
+
