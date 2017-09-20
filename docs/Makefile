@@ -24,4 +24,4 @@ help:
 	make html 
 	cp -rf $(BUILDDIR)/html/ $(GH_PAGES)
 	git add $(GH_PAGES)
-	git commit -m "Generated gh-pages" && git push origin master
+	git commit -m "Generated gh-pages"
