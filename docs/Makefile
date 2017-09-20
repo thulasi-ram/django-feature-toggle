@@ -22,7 +22,7 @@ help:
 
    gh-pages:
 	make html
-	cp -rf $(BUILDDIR)/html/* ../_$(TMP_GH_PAGES)
+	cp -rf $(BUILDDIR)/html/ ../_$(TMP_GH_PAGES)
 	cd ../
 	git checkout gh-pages
 	cp -rf _$(TMP_GH_PAGES)/* .
