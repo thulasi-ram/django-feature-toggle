@@ -19,3 +19,6 @@ Quick start
 3. Run `python manage.py migrate` to create the models required feature_toggle.
 
 4. Start you app to use the feature_toggle
+
+Read more on https://thulasi-ram.github.io/django-feature-toggle
+----------------------------------------------------------------
