@@ -1,0 +1,178 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Welcome to Feature Toggle’s documentation! &#8212; Feature Toggle 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">Feature Toggle 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-feature-toggle-s-documentation">
+<h1>Welcome to Feature Toggle’s documentation!<a class="headerlink" href="#welcome-to-feature-toggle-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="feature-toggle">
+<h2>Feature Toggle<a class="headerlink" href="#feature-toggle" title="Permalink to this headline">¶</a></h2>
+<p>Feature Toggle is a simple Django app based on the patter proposed by Martin Fowler
+Detailed documentation is in the “docs” directory.</p>
+<div class="section" id="quick-start">
+<h3>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Install the package pip install <a class="reference external" href="mailto:git&#37;&#52;&#48;github&#46;com">git<span>&#64;</span>github<span>&#46;</span>com</a>:thulasi-ram/django-feature-toggle.git</p>
+</li>
+<li><p class="first">Add “feature_toggle” to your INSTALLED_APPS setting like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">...</span>
+    <span class="s1">&#39;feature_toggle&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run <cite>python manage.py migrate</cite> to create the models required feature_toggle.</p>
+</li>
+<li><p class="first">Start you app to use the feature_toggle</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage:<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Toggle is the class that should be used in the code.
+for ex:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">feature_toggle.toggle</span> <span class="kn">import</span> <span class="n">Toggle</span>
+<span class="n">tgl</span> <span class="o">=</span> <span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now you can use this <code class="docutils literal"><span class="pre">tgl</span></code> any where even as dependency injection.</p>
+<p><code class="docutils literal"><span class="pre">name</span></code> can be descriptive.</p>
+<p><code class="docutils literal"><span class="pre">code</span></code> is only capital A-Z and underscore is allowed.</p>
+<p><code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">code</span></code> are optional but any one of them is mandatory. Getting a toggle by <code class="docutils literal"><span class="pre">code</span></code> is encouraged.
+for ex:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="models">
+<h1>Models:<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal"><span class="pre">FeatureToggle</span></code> - The actual class where the toggles are stored.</p>
+<p><code class="docutils literal"><span class="pre">FeatureToggleAttribute</span></code> - All the attributes for a particular feature toggle can be put here. For ex: <code class="docutils literal"><span class="pre">start_date</span></code> and <code class="docutils literal"><span class="pre">end_date.</span></code></p>
+<p>These can be set through the admin panel under the FeatureToggle section</p>
+</div>
+<div class="section" id="basic-methods">
+<h1>Basic methods:<a class="headerlink" href="#basic-methods" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal"><span class="pre">tgl.is_active()</span></code>: Checks the active status of a toggle</p>
+<p><code class="docutils literal"><span class="pre">tgl.is_enabled()</span></code>: Checks the active status and validation if any of start_date and end_date are present in the attributes.</p>
+<p>All the other attributes set in the FeatureToggleAttribute model can be accessed directly via <code class="docutils literal"><span class="pre">tgl.&lt;attribute</span> <span class="pre">name&gt;</span></code></p>
+<p>for ex: if start_date is set in FeatureToggleAttribute. it can be accessed as <code class="docutils literal"><span class="pre">tgl.start_date.</span></code></p>
+</div>
+<div class="section" id="custom-toggles">
+<h1>Custom Toggles:<a class="headerlink" href="#custom-toggles" title="Permalink to this headline">¶</a></h1>
+<p>You can always extend the <code class="docutils literal"><span class="pre">Toggle</span></code> class to suit your business logic. And you can use the services provided in <code class="docutils literal"><span class="pre">FeatureToggleService</span></code> (in <code class="docutils literal"><span class="pre">feature_toggle.services</span></code>) for flexibility.</p>
+<p>The contract is bound to an interface <code class="docutils literal"><span class="pre">BaseToggle</span></code> (in <code class="docutils literal"><span class="pre">feature_toggle.toggle_base</span></code>). If you need to implement a barebone toggle, that should be a subclass of this toggle.</p>
+</div>
+<div class="section" id="custom-environments">
+<h1>Custom Environments:<a class="headerlink" href="#custom-environments" title="Permalink to this headline">¶</a></h1>
+<p>If you feel the default environments are not suitable to you. Please set a choice tuple for <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_CUSTOM_ENV_CHOICES</span></code> in settings.</p>
+<p>Note that this custom choices will be appended to the default choices. If incase you want to have only your custom choices, set <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_DEFAULT_ENV_CHOICES=()</span></code> in your settings.</p>
+<p>Services will make an assertion for valid environments.</p>
+</div>
+<div class="section" id="custom-attributes">
+<h1>Custom Attributes:<a class="headerlink" href="#custom-attributes" title="Permalink to this headline">¶</a></h1>
+<p>Same as Environments if you need more attributes you should set <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_CUSTOM_ATTR_CHOICES</span></code> in settings.</p>
+<p>Note that this custom choices will be appended to the default choices. If incase you want to have only your custom choices, set <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_DEFAULT_ATTR_CHOICES=()</span></code> in your settings.</p>
+<p>There is no assertion for now in attributes since the only way to add them is through admin. Overriding the default will affect the admin and new choices will be shown.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to Feature Toggle’s documentation!</a><ul>
+<li><a class="reference internal" href="#feature-toggle">Feature Toggle</a><ul>
+<li><a class="reference internal" href="#quick-start">Quick start</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage">Usage:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#models">Models:</a></li>
+<li><a class="reference internal" href="#basic-methods">Basic methods:</a></li>
+<li><a class="reference internal" href="#custom-toggles">Custom Toggles:</a></li>
+<li><a class="reference internal" href="#custom-environments">Custom Environments:</a></li>
+<li><a class="reference internal" href="#custom-attributes">Custom Attributes:</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">Feature Toggle 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Damodharan Thulasiram.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>
