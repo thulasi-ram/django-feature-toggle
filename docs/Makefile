@@ -22,10 +22,6 @@ help:
 
    gh-pages:
 	make html
-	cp -rf $(BUILDDIR)/html/ ../_$(TMP_GH_PAGES)
-	cd .. && echo "Changed dire"
-	git checkout gh-pages
-	cp -rf _$(TMP_GH_PAGES)/ .
-	rm -rf _$(TMP_GH_PAGES)
+	cp -rf $(BUILDDIR)/html/ $(SOURCEDIR)
 	git add -A
-	git ci -m "Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`" && git push origin gh-pages ; git checkout master
+	git ci -m "Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`" && git push origin master
