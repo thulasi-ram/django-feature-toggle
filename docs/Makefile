@@ -6,8 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
 SPHINXPROJ    = FeatureToggle
 SOURCEDIR     = .
-BUILDDIR      = _build
-TMP_GH_PAGES = tmp_gh_pages
+BUILDDIR      = gh-pages
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -19,9 +18,3 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-
-   gh-pages:
-	make html
-	cp -rf $(BUILDDIR)/html/ $(SOURCEDIR)/gh-pages
-	git add -A
-	git commit -m "Generated gh-pages" && git push origin master
