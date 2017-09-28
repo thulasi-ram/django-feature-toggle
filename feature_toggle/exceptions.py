@@ -19,7 +19,7 @@ class FeatureToggleAlreadyExists(Exception):
     """
 
     def __init__(self, **kwargs):
-        msg = kwargs.pop('msg')
+        msg = kwargs.pop('msg') if 'msg' in kwargs else ''
         if not msg:
             msg = 'FeatureToggle already exists'
             if kwargs:
