@@ -65,7 +65,6 @@ class Toggle(BaseToggle):
         # should we do this
         self._feature_toggle = tgl
 
-
     def __getattr__(self, attrib):
         """
         A hook to access FeatureToggleAttributes.
