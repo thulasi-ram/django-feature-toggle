@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from djutil.models import TimeStampedModel
 
+from feature_toggle.exceptions import FeatureToggleAttributeDoesNotExist, FeatureToggleAttributeAlreadyExists
 from feature_toggle import constants
 from feature_toggle.utilities import format_to_date
 from feature_toggle.validators import validate_feature_toggle_code
@@ -23,18 +24,22 @@ class FeatureToggle(TimeStampedModel):
     class Meta:
         unique_together = (('name', 'environment'), ('code', 'environment'))
 
-    def set_attribute(self, key, value=None):
+    def set_attribute(self, key, value=None, update_if_existing=True):
         """
         sets up the given an attribute. If existing will update else will create.
 
         :param key: name of the attribute
         :param value: value of the attribute
+        :param update_if_existing: If false will raise Exception
         """
         # todo: assert for key types?
         if key in (constants.FeatureToggle.Attributes.START_DATE, constants.FeatureToggle.Attributes.END_DATE):
             value = format_to_date(value) if value else value
 
-        attrib, _ = self.attributes.get_or_create(key=key)
+        attrib, created = self.attributes.get_or_create(key=key)
+        if not created and not update_if_existing:
+            raise FeatureToggleAttributeAlreadyExists(**dict(key=key))
+
         attrib.value = value
         attrib.save()
 
@@ -50,7 +55,7 @@ class FeatureToggle(TimeStampedModel):
             return attr.value
         except ObjectDoesNotExist:
             if raise_does_not_exist:
-                raise
+                FeatureToggleAttributeDoesNotExist(**dict(key=key))
             return None
 
     @property

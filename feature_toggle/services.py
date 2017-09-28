@@ -3,7 +3,10 @@
 import datetime
 import logging
 
+from django.db import IntegrityError
+
 from feature_toggle import constants
+from feature_toggle.exceptions import FeatureToggleDoesNotExist, FeatureToggleAlreadyExists
 from feature_toggle.models import FeatureToggle
 from feature_toggle.utilities import format_to_date
 
@@ -30,7 +33,7 @@ class FeatureToggleService(object):
         except FeatureToggle.DoesNotExist:
             logger.warn('Feature for args: {arg} does not exist.'.format(arg=kwargs))
             if raise_does_not_exist:
-                raise
+                raise FeatureToggleDoesNotExist(**kwargs)
             logger.warn('Suppressing does not exist')
             return FeatureToggle()  # TODO: Should return it initialized with passed values?
 
@@ -97,3 +100,25 @@ class FeatureToggleService(object):
             raise
 
         return False
+
+    @classmethod
+    def _create_toggle(cls, **kwargs):
+        logger = logging.getLogger(cls.__name__)
+        try:
+            return FeatureToggle.objects.create(**kwargs)
+        except IntegrityError as e:
+            logger.exception('Unable to create Feature Toggle for data: {d} due to {e}'.format(d=kwargs, e=repr(e)))
+            # TODO: assuming already exists? or should we go with get_or_create and raise exception
+            raise FeatureToggleAlreadyExists(**kwargs)
+
+    @classmethod
+    def create(cls, name, code, env, attributes=None):
+        tgl = cls._create_toggle(**dict(name=name, code=code, environment=env))
+        if attributes:
+            cls.set_attributes(tgl=tgl, attributes=attributes, update_if_existing=False)
+
+    @classmethod
+    def set_attributes(cls, tgl, attributes, update_if_existing):
+        assert isinstance(attributes, dict)
+        for key, value in attributes.items():
+            tgl.set_attribute(key, value, update_if_existing=update_if_existing)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.core.exceptions import ObjectDoesNotExist
 
+from feature_toggle.exceptions import FeatureToggleAttributeDoesNotExist, FeatureToggleAlreadyExists
 from feature_toggle.services import FeatureToggleService
 from feature_toggle.toggle_base import BaseToggle
 
@@ -14,6 +14,7 @@ class Toggle(BaseToggle):
 
     def __init__(self, environment, name=None, code=None, **kwargs):
         self.raise_does_not_exist = kwargs.get('raise_does_not_exist', self.raise_does_not_exist)
+        self.attributes = kwargs.get('attributes', {})
 
         if name and code:
             self._feature_toggle = FeatureToggleService.get_toggle(name=name,
@@ -51,6 +52,20 @@ class Toggle(BaseToggle):
     def is_enabled(self):
         return FeatureToggleService.is_enabled(self._feature_toggle)
 
+    def create(self):
+        if self.raise_does_not_exist:
+            # means the toggle exists. Else no way to get here
+            raise FeatureToggleAlreadyExists()
+        if self._feature_toggle.id:
+            # if id is present somehow the toggle has already been created.
+            # this is a paranoid check though
+            raise FeatureToggleAlreadyExists()
+        tgl = FeatureToggleService.create(name=self.name, code=self.code,
+                                          env=self.environment, attributes=self.attributes)
+        # should we do this
+        self._feature_toggle = tgl
+
+
     def __getattr__(self, attrib):
         """
         A hook to access FeatureToggleAttributes.
@@ -79,5 +94,5 @@ class Toggle(BaseToggle):
 
         try:
             return self._feature_toggle.get_attribute(key=attrib, raise_does_not_exist=True)  # always to be true
-        except ObjectDoesNotExist:
+        except FeatureToggleAttributeDoesNotExist:
             raise AttributeError(attrib)
