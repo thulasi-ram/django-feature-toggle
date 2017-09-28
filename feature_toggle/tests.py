@@ -2,10 +2,10 @@
 from __future__ import unicode_literals
 
 import datetime
-from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 
 from feature_toggle import constants
+from feature_toggle.exceptions import FeatureToggleDoesNotExist, FeatureToggleAlreadyExists
 from feature_toggle.models import FeatureToggle
 from feature_toggle.toggle import Toggle
 
@@ -36,13 +36,14 @@ class TestToggle(TestCase):
         self._toggle_equality_test(tgl, ft_tgl)
 
     def test_non_existing_toggle(self):
-        with self.assertRaises(ObjectDoesNotExist):
+        with self.assertRaises(FeatureToggleDoesNotExist):
             Toggle(environment=constants.FeatureToggle.Environment.LOCAL, name='-', code='-')
 
     def test_non_existing_toggle_with_error_suppression(self):
-        tgl = Toggle(environment=constants.FeatureToggle.Environment.LOCAL, name='-', code='-',
+        name = '-'
+        tgl = Toggle(environment=constants.FeatureToggle.Environment.LOCAL, name=name, code='-',
                      raise_does_not_exist=False)
-        self.assertEqual(tgl.name, '')
+        self.assertEqual(tgl.name, name)
 
     def test_existing_toggle_with_name(self):
         ft_tgl = self.active_ft_tgl
@@ -50,8 +51,9 @@ class TestToggle(TestCase):
         self._toggle_equality_test(tgl, ft_tgl)
 
     def test_non_existing_toggle_with_name_and_error_suppression(self):
-        tgl = Toggle(environment=constants.FeatureToggle.Environment.LOCAL, name='-', raise_does_not_exist=False)
-        self.assertEqual(tgl.name, '')
+        name = '-'
+        tgl = Toggle(environment=constants.FeatureToggle.Environment.LOCAL, name=name, raise_does_not_exist=False)
+        self.assertEqual(tgl.name, name)
 
     def test_existing_toggle_with_code(self):
         ft_tgl = self.inactive_ft_tgl
@@ -59,8 +61,9 @@ class TestToggle(TestCase):
         self._toggle_equality_test(tgl, ft_tgl)
 
     def test_non_existing_toggle_with_code_and_error_suppression(self):
-        tgl = Toggle(environment=constants.FeatureToggle.Environment.LOCAL, code='-', raise_does_not_exist=False)
-        self.assertEqual(tgl.code, '')
+        code = '-'
+        tgl = Toggle(environment=constants.FeatureToggle.Environment.LOCAL, code=code, raise_does_not_exist=False)
+        self.assertEqual(tgl.code, code)
 
     def test_is_active_with_active_toggle(self):
         ft_tgl = self.active_ft_tgl
@@ -158,3 +161,35 @@ class TestToggle(TestCase):
         self.assertEqual(tgl.name, ft_tgl.name)
         self.assertEqual(tgl.environment, ft_tgl.environment)
         self.assertEqual(tgl.is_active(), ft_tgl.is_active)
+
+    def test_creating_existing_toggle(self):
+        ft_tgl = self.active_ft_tgl
+        tgl = Toggle(environment=ft_tgl.environment, name=ft_tgl.name, code=ft_tgl.code)
+        with self.assertRaises(FeatureToggleAlreadyExists):
+            tgl.create()
+
+    def test_creating_existing_toggle_with_raise_if_does_not_exists(self):
+        ft_tgl = self.active_ft_tgl
+        tgl = Toggle(environment=ft_tgl.environment, name=ft_tgl.name, code=ft_tgl.code, raise_does_not_exist=False)
+        with self.assertRaises(FeatureToggleAlreadyExists):
+            tgl.create()
+
+    def test_creating_non_existing_toggle(self):
+        name = 'test3'
+        code = 'TEST3'
+        tgl = Toggle(environment=self.active_ft_tgl.environment, name=name, code=code, raise_does_not_exist=False)
+        tgl.create()
+        self.assertEquals(tgl.name, name)
+        self.assertEquals(tgl.code, code)
+
+    def test_creating_non_existing_toggle_with_attributes(self):
+        name = 'test5'
+        code = 'TEST5'
+        attrib_key = 'module'
+        attrib_value = 'TEST5'
+        tgl = Toggle(environment=self.active_ft_tgl.environment, name=name, code=code,
+                     attributes={attrib_key: attrib_value}, raise_does_not_exist=False)
+        tgl.create()
+        self.assertEquals(tgl.name, name)
+        self.assertEquals(tgl.code, code)
+        self.assertEquals(getattr(tgl, attrib_key), attrib_value)
