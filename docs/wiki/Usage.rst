@@ -24,7 +24,7 @@ for ex:
 
     Toggle(environment=environment, code='test1')
 
-By default initializing a non-existing that has not been created already will raise custom Exception: FeatureToggleDoesNotExist. To suppress it you can send ``raise_does_not_exist`` while initialization
+By default initializing a non-existing that has not been created already will raise custom exception ``FeatureToggleDoesNotExist``. To suppress it you can send ``raise_does_not_exist`` while initialization
 
 .. sourcecode:: python
 
@@ -36,6 +36,7 @@ This will create a toggle runtime and will let you do your work. But if you want
 
     tgl.create()
 
+But beware creating a toggle that already exists will raise ``FeatureToggleAlreadyExists``.
 
 Models
 ------
@@ -56,7 +57,7 @@ All the other attributes set in the FeatureToggleAttribute model can be accessed
 
 for ex: if start_date is set in FeatureToggleAttribute. it can be accessed as ``tgl.start_date.``
 
-Admin will provide an intutive interface to set attributes via inline formsets. If you want to set them programatically send `attributes` as a dict while initializing a toggle.
+Admin will provide an intutive interface to set attributes via inline formsets. If you want to set them programatically send ``attributes`` as a dict while initializing a toggle.
 
 
 .. sourcecode:: python
