@@ -58,7 +58,7 @@ class Toggle(BaseToggle):
             raise FeatureToggleAlreadyExists()
         if self._feature_toggle.id:
             # if id is present somehow the toggle has already been created.
-            # this is a paranoid check though
+            # sometime existing toggles can be initiated with raise_does_not_exist
             raise FeatureToggleAlreadyExists()
         tgl = FeatureToggleService.create(name=self.name, code=self.code,
                                           env=self.environment, attributes=self.attributes)
