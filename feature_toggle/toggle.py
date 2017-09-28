@@ -52,7 +52,7 @@ class Toggle(BaseToggle):
     def is_enabled(self):
         return FeatureToggleService.is_enabled(self._feature_toggle)
 
-    def create(self, activate=True):
+    def create(self):
         """
         Creates a toggle by default it is true. We can set it to be inactive also.
         :param activate: Should the toggle being created will be activated by default.
@@ -67,8 +67,7 @@ class Toggle(BaseToggle):
             raise FeatureToggleAlreadyExists()
         tgl = FeatureToggleService.create_toggle(name=self.name, code=self.code,
                                           env=self.environment, attributes=self.attributes)
-        if activate:
-            tgl.activate()
+
         self._feature_toggle = tgl
 
     def __getattr__(self, attrib):

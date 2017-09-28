@@ -114,7 +114,7 @@ class FeatureToggleService(object):
     @classmethod
     def create_toggle(cls, name, code, env, attributes=None):
         """
-        By default creates inactive toggle to prevent mistakes. Should be activated manually by tgl.activate()
+        Creates a toggle and sets its attributes
         :param name: Name of the toggle
         :param code: Code of the toggle
         :param env: env of the toggle
