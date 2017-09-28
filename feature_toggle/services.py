@@ -116,6 +116,7 @@ class FeatureToggleService(object):
         tgl = cls._create_toggle(**dict(name=name, code=code, environment=env))
         if attributes:
             cls.set_attributes(tgl=tgl, attributes=attributes, update_if_existing=False)
+        return tgl
 
     @classmethod
     def set_attributes(cls, tgl, attributes, update_if_existing):
