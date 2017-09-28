@@ -52,7 +52,12 @@ class Toggle(BaseToggle):
     def is_enabled(self):
         return FeatureToggleService.is_enabled(self._feature_toggle)
 
-    def create(self):
+    def create(self, activate=True):
+        """
+        Creates a toggle by default it is true. We can set it to be inactive also.
+        :param activate: Should the toggle being created will be activated by default.
+        :return: None
+        """
         if self.raise_does_not_exist:
             # means the toggle exists. Else no way to get here
             raise FeatureToggleAlreadyExists()
@@ -60,9 +65,10 @@ class Toggle(BaseToggle):
             # if id is present somehow the toggle has already been created.
             # sometime existing toggles can be initiated with raise_does_not_exist
             raise FeatureToggleAlreadyExists()
-        tgl = FeatureToggleService.create(name=self.name, code=self.code,
+        tgl = FeatureToggleService.create_toggle(name=self.name, code=self.code,
                                           env=self.environment, attributes=self.attributes)
-        # should we do this
+        if activate:
+            tgl.activate()
         self._feature_toggle = tgl
 
     def __getattr__(self, attrib):
