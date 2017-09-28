@@ -44,12 +44,12 @@
 <h1>Welcome to Feature Toggle’s documentation!<a class="headerlink" href="#welcome-to-feature-toggle-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="feature-toggle">
 <h2>Feature Toggle<a class="headerlink" href="#feature-toggle" title="Permalink to this headline">¶</a></h2>
-<p>Feature Toggle is a simple Django app based on the patter proposed by Martin Fowler
-Detailed documentation is in the “docs” directory.</p>
+<p>Feature Toggle is a simple Django app based on the pattern proposed by Martin Fowler
+Detailed documentation is in <a class="reference external" href="https://thulasi-ram.github.io/django-feature-toggle">https://thulasi-ram.github.io/django-feature-toggle</a>.</p>
 <div class="section" id="quick-start">
 <h3>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic">
-<li><p class="first">Install the package pip install <a class="reference external" href="mailto:git&#37;&#52;&#48;github&#46;com">git<span>&#64;</span>github<span>&#46;</span>com</a>:thulasi-ram/django-feature-toggle.git</p>
+<li><p class="first">Install the package <cite>pip install django-feature-toggle</cite></p>
 </li>
 <li><p class="first">Add “feature_toggle” to your INSTALLED_APPS setting like this:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
@@ -64,9 +64,6 @@ Detailed documentation is in the “docs” directory.</p>
 <li><p class="first">Start you app to use the feature_toggle</p>
 </li>
 </ol>
-</div>
-<div class="section" id="read-more-on-https-thulasi-ram-github-io-django-feature-toggle">
-<h3>Read more on <a class="reference external" href="https://thulasi-ram.github.io/django-feature-toggle">https://thulasi-ram.github.io/django-feature-toggle</a><a class="headerlink" href="#read-more-on-https-thulasi-ram-github-io-django-feature-toggle" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 <div class="section" id="usage">
@@ -85,6 +82,11 @@ for ex:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>By defaulting initializing a non exisiting will raise custom Exception: FeatureToggleDoesNotExist. To suppress it you can send <code class="docutils literal"><span class="pre">raise_does_not_exist</span></code> while initialization</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tgl</span> <span class="o">=</span> <span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">,</span> <span class="n">raise_does_not_exist</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will create a toggle run time and will let you do your work. But if you want to persist your toggle you can use <code class="docutils literal"><span class="pre">tgl.create()</span></code>.</p>
 </div>
 </div>
 <div class="section" id="models">
@@ -131,7 +133,6 @@ for ex:</p>
 <li><a class="reference internal" href="#">Welcome to Feature Toggle’s documentation!</a><ul>
 <li><a class="reference internal" href="#feature-toggle">Feature Toggle</a><ul>
 <li><a class="reference internal" href="#quick-start">Quick start</a></li>
-<li><a class="reference internal" href="#read-more-on-https-thulasi-ram-github-io-django-feature-toggle">Read more on https://thulasi-ram.github.io/django-feature-toggle</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#usage">Usage:</a></li>

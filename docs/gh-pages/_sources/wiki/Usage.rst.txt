@@ -27,6 +27,14 @@ for ex:
 
     Toggle(environment=environment, code='test1')
 
+By defaulting initializing a non exisiting will raise custom Exception: FeatureToggleDoesNotExist. To suppress it you can send ``raise_does_not_exist`` while initialization
+
+.. sourcecode:: python
+
+    tgl = Toggle(environment=environment, code='test1', raise_does_not_exist=False)
+
+This will create a toggle run time and will let you do your work. But if you want to persist your toggle you can use ``tgl.create()``.
+
 
 Models:
 ========
