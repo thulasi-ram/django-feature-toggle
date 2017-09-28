@@ -56,6 +56,11 @@ for ex:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>By defaulting initializing a non exisiting will raise custom Exception: FeatureToggleDoesNotExist. To suppress it you can send <code class="docutils literal"><span class="pre">raise_does_not_exist</span></code> while initialization</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tgl</span> <span class="o">=</span> <span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">,</span> <span class="n">raise_does_not_exist</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will create a toggle run time and will let you do your work. But if you want to persist your toggle you can use <code class="docutils literal"><span class="pre">tgl.create()</span></code>.</p>
 <div class="section" id="models">
 <h2>Models:<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">FeatureToggle</span></code> - The actual class where the toggles are stored.</p>
