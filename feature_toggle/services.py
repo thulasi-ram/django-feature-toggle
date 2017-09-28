@@ -3,8 +3,6 @@
 import datetime
 import logging
 
-from django.conf import settings
-
 from feature_toggle import constants
 from feature_toggle.models import FeatureToggle
 from feature_toggle.utilities import format_to_date
