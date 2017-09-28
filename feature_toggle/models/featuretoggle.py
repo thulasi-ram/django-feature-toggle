@@ -65,3 +65,7 @@ class FeatureToggle(TimeStampedModel):
     @property
     def end_date(self):
         return self.get_attribute(constants.FeatureToggle.Attributes.END_DATE)
+
+    def activate(self):
+        self.is_active = True
+        self.save()

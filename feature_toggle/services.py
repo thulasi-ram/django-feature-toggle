@@ -35,7 +35,7 @@ class FeatureToggleService(object):
             if raise_does_not_exist:
                 raise FeatureToggleDoesNotExist(**kwargs)
             logger.warn('Suppressing does not exist')
-            return FeatureToggle()  # TODO: Should return it initialized with passed values?
+            return FeatureToggle(**kwargs)
 
     @classmethod
     def get_toggle(cls, name, code, env, raise_does_not_exist=True):
@@ -112,7 +112,15 @@ class FeatureToggleService(object):
             raise FeatureToggleAlreadyExists(**kwargs)
 
     @classmethod
-    def create(cls, name, code, env, attributes=None):
+    def create_toggle(cls, name, code, env, attributes=None):
+        """
+        By default creates inactive toggle to prevent mistakes. Should be activated manually by tgl.activate()
+        :param name: Name of the toggle
+        :param code: Code of the toggle
+        :param env: env of the toggle
+        :param attributes: Dict of any attributes to be set on the toggle.
+        :return: FeatureToggle object
+        """
         tgl = cls._create_toggle(**dict(name=name, code=code, environment=env))
         if attributes:
             cls.set_attributes(tgl=tgl, attributes=attributes, update_if_existing=False)
