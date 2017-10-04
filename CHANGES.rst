@@ -1,21 +1,22 @@
+=========
 Changelog
 =========
 
 
 (0.1.2)
-------------
+=======
 - Added option to create a toggle generated at runtime. [Thulasiram]
 - Added option to set attributes while initializing toggle. [Thulasiram]
 - Added more tests. [Thulasiram]
 - Updated docs. [Thulasiram]
 
 (0.1.1)
-------------
+=======
 - Just bumping the version number to reflect in pip. [Thulasiram]
 
 
 (0.1)
-------------
+=====
 - Added gitchangelog package. [Thulasiram]
 - Added initial requirements and changes files. [Thulasiram]
 - Updated docs for commit:6ba3b6668abe48d9a26c73de162990c9bdc368d7

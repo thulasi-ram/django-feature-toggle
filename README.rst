@@ -8,7 +8,7 @@ Detailed documentation is `here <https://thulasi-ram.github.io/django-feature-to
 .
 
 Quickstart
------------
+==========
 1. Install the package ``pip install django-feature-toggle``
 
 2. Add "feature_toggle" to your INSTALLED_APPS setting like this::

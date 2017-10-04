@@ -39,7 +39,7 @@ This will create a toggle runtime and will let you do your work. But if you want
 But beware creating a toggle that already exists will raise ``FeatureToggleAlreadyExists``.
 
 Models
-------
+======
 
 ``FeatureToggle`` - The actual class where the toggles are stored.
 
@@ -48,7 +48,7 @@ Models
 These can be set through the admin panel under the FeatureToggle section
 
 Basic methods
--------------
+=============
 ``tgl.is_active()``: Checks the active status of a toggle
 
 ``tgl.is_enabled()``: Checks the active status and validation if any of start_date and end_date are present in the attributes.
@@ -71,7 +71,7 @@ this can then be accessed as
     tgl.module
 
 Custom Toggles
---------------
+==============
 
 You can always extend the ``Toggle`` class to suit your business logic. And you can use the services provided in ``FeatureToggleService`` (in ``feature_toggle.services``) for flexibility.
 
@@ -79,7 +79,7 @@ The contract is bound to an interface ``BaseToggle`` (in ``feature_toggle.toggle
 
 
 Custom Environments
--------------------
+===================
 
 If you feel the default environments are not suitable for you. Please set a choice tuple for ``FEATURE_TOGGLE_CUSTOM_ENV_CHOICES`` in settings.
 
@@ -89,7 +89,7 @@ Services will make an assertion for valid environments.
 
 
 Custom Attributes
------------------
+=================
 
 Same as Environments if you need more attributes you should set ``FEATURE_TOGGLE_CUSTOM_ATTR_CHOICES`` in settings.
 
