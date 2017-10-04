@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to Feature Toggle’s documentation! &mdash; Feature Toggle 0.1 documentation</title>
+  <title>Feature Toggle &mdash; Feature Toggle 0.1 documentation</title>
   
 
   
@@ -30,12 +30,15 @@
   
 
   
+    <link rel="stylesheet" href="_static/banner.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Feature Toggle 0.1 documentation" href="#"/> 
+    <link rel="top" title="Feature Toggle 0.1 documentation" href="#"/>
+        <link rel="next" title="Usage" href="wiki/Usage.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -88,25 +91,16 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Welcome to Feature Toggle’s documentation!</a><ul>
-<li><a class="reference internal" href="#feature-toggle">Feature Toggle</a><ul>
-<li><a class="reference internal" href="#quickstart">Quickstart</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Feature Toggle</a></li>
 </ul>
-</li>
-<li><a class="reference internal" href="#usage">Usage</a><ul>
-<li><a class="reference internal" href="#models">Models</a></li>
-<li><a class="reference internal" href="#basic-methods">Basic methods</a></li>
-<li><a class="reference internal" href="#custom-toggles">Custom Toggles</a></li>
-<li><a class="reference internal" href="#custom-environments">Custom Environments</a></li>
-<li><a class="reference internal" href="#custom-attributes">Custom Attributes</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="wiki/Usage.html">Usage</a></li>
 </ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="wiki/Changelog.html">Changelog</a></li>
 </ul>
-</li>
-</ul>
-</div>
+
             
           
         </div>
@@ -149,7 +143,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>Welcome to Feature Toggle’s documentation!</li>
+      <li>Feature Toggle</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -168,19 +162,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-feature-toggle-s-documentation">
-<h1>Welcome to Feature Toggle’s documentation!<a class="headerlink" href="#welcome-to-feature-toggle-s-documentation" title="Permalink to this headline">¶</a></h1>
+  
+
+
+
+
+
 <div class="section" id="feature-toggle">
-<h2>Feature Toggle<a class="headerlink" href="#feature-toggle" title="Permalink to this headline">¶</a></h2>
+<h1>Feature Toggle<a class="headerlink" href="#feature-toggle" title="Permalink to this headline">¶</a></h1>
 <p>Feature Toggle is a simple Django app based on the behavioural pattern <a class="reference external" href="https://martinfowler.com/articles/feature-toggles.html">Feature Toggle</a> proposed by Martin Fowler.</p>
 <p>Detailed documentation is <a class="reference external" href="https://thulasi-ram.github.io/django-feature-toggle">here</a>
 .</p>
 <div class="section" id="quickstart">
-<h3>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h3>
+<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
 <li><p class="first">Install the package <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">django-feature-toggle</span></code></p>
 </li>
-<li><p class="first">Add “feature_toggle” to your INSTALLED_APPS setting like this:</p>
+<li><p class="first">Add &#8220;feature_toggle&#8221; to your INSTALLED_APPS setting like this:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
     <span class="o">...</span>
     <span class="s1">&#39;feature_toggle&#39;</span><span class="p">,</span>
@@ -193,72 +191,11 @@
 <li><p class="first">Start your app to use the feature_toggle.</p>
 </li>
 </ol>
-</div>
-</div>
-<div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>Toggle is the class that should be used in the code.
-for ex:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">feature_toggle.toggle</span> <span class="kn">import</span> <span class="n">Toggle</span>
-<span class="n">tgl</span> <span class="o">=</span> <span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Now you can use this <code class="docutils literal"><span class="pre">tgl</span></code> anywhere even as dependency injection.</p>
-<p><code class="docutils literal"><span class="pre">name</span></code> can be descriptive.</p>
-<p><code class="docutils literal"><span class="pre">code</span></code> is only capital A-Z and underscore is allowed.</p>
-<p><code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">code</span></code> are optional but any one of them is mandatory. Getting a toggle by <code class="docutils literal"><span class="pre">code</span></code> is encouraged.
-for ex:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>By default initializing a non-existing that has not been created already will raise custom exception <code class="docutils literal"><span class="pre">FeatureToggleDoesNotExist</span></code>. To suppress it you can send <code class="docutils literal"><span class="pre">raise_does_not_exist</span></code> while initialization</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tgl</span> <span class="o">=</span> <span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">,</span> <span class="n">raise_does_not_exist</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>This will create a toggle runtime and will let you do your work. But if you want to persist your toggle you can use</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tgl</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>But beware creating a toggle that already exists will raise <code class="docutils literal"><span class="pre">FeatureToggleAlreadyExists</span></code>.</p>
-<div class="section" id="models">
-<h3>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">FeatureToggle</span></code> - The actual class where the toggles are stored.</p>
-<p><code class="docutils literal"><span class="pre">FeatureToggleAttribute</span></code> - All the attributes for a particular feature toggle can be put here. For ex: <code class="docutils literal"><span class="pre">start_date</span></code> and <code class="docutils literal"><span class="pre">end_date.</span></code></p>
-<p>These can be set through the admin panel under the FeatureToggle section</p>
-</div>
-<div class="section" id="basic-methods">
-<h3>Basic methods<a class="headerlink" href="#basic-methods" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">tgl.is_active()</span></code>: Checks the active status of a toggle</p>
-<p><code class="docutils literal"><span class="pre">tgl.is_enabled()</span></code>: Checks the active status and validation if any of start_date and end_date are present in the attributes.</p>
-<p>All the other attributes set in the FeatureToggleAttribute model can be accessed directly via <code class="docutils literal"><span class="pre">tgl.&lt;attribute</span> <span class="pre">name&gt;</span></code></p>
-<p>for ex: if start_date is set in FeatureToggleAttribute. it can be accessed as <code class="docutils literal"><span class="pre">tgl.start_date.</span></code></p>
-<p>Admin will provide an intutive interface to set attributes via inline formsets. If you want to set them programatically send <code class="docutils literal"><span class="pre">attributes</span></code> as a dict while initializing a toggle.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tgl</span> <span class="o">=</span> <span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;TESTING&#39;</span><span class="p">})</span>
-</pre></div>
-</div>
-<p>this can then be accessed as</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tgl</span><span class="o">.</span><span class="n">module</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="custom-toggles">
-<h3>Custom Toggles<a class="headerlink" href="#custom-toggles" title="Permalink to this headline">¶</a></h3>
-<p>You can always extend the <code class="docutils literal"><span class="pre">Toggle</span></code> class to suit your business logic. And you can use the services provided in <code class="docutils literal"><span class="pre">FeatureToggleService</span></code> (in <code class="docutils literal"><span class="pre">feature_toggle.services</span></code>) for flexibility.</p>
-<p>The contract is bound to an interface <code class="docutils literal"><span class="pre">BaseToggle</span></code> (in <code class="docutils literal"><span class="pre">feature_toggle.toggle_base</span></code>). If you need to implement a barebone toggle, that should be a subclass of this toggle.</p>
-</div>
-<div class="section" id="custom-environments">
-<h3>Custom Environments<a class="headerlink" href="#custom-environments" title="Permalink to this headline">¶</a></h3>
-<p>If you feel the default environments are not suitable for you. Please set a choice tuple for <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_CUSTOM_ENV_CHOICES</span></code> in settings.</p>
-<p>Note that these custom choices will be appended to the default choices. If in case you want to have only your custom choices, set <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_DEFAULT_ENV_CHOICES=()</span></code> in your settings.</p>
-<p>Services will make an assertion for valid environments.</p>
-</div>
-<div class="section" id="custom-attributes">
-<h3>Custom Attributes<a class="headerlink" href="#custom-attributes" title="Permalink to this headline">¶</a></h3>
-<p>Same as Environments if you need more attributes you should set <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_CUSTOM_ATTR_CHOICES</span></code> in settings.</p>
-<p>Note that these custom choices will be appended to the default choices. If in case you want to have only your custom choices, set <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_DEFAULT_ATTR_CHOICES=()</span></code> in your settings.</p>
-<p>There is no assertion for now in attributes since the only way to add them is through admin. Overriding the default will affect the admin and new choices will be shown.</p>
 <div class="toctree-wrapper compound">
 </div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
 </div>
 </div>
 </div>
@@ -270,6 +207,13 @@ for ex:</p>
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wiki/Usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
   
 
   <hr/>
@@ -291,6 +235,23 @@ for ex:</p>
 
   </div>
   
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        <span class="fa fa-book"> Other Versions</span>
+        v: master
+        <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Tags</dt>
+            <dd><a href="v0.1.2/index.html">v0.1.2</a></dd>
+        </dl>
+        <dl>
+            <dt>Branches</dt>
+            <dd><a href="master/index.html">master</a></dd>
+        </dl>
+    </div>
+</div>
 
 
   
