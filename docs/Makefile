@@ -21,7 +21,7 @@ help:
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
    gh-pages:
-	make html 
+	sphinx-versioning build -b docs $(BUILDDIR)/html
 	cp -rf $(BUILDDIR)/html/ $(GH_PAGES)
 	git add $(GH_PAGES)
 	git commit -m "Generated gh-pages"
