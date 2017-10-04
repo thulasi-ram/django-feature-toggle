@@ -3,11 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Feature Toggle's documentation!
-==========================================
-
 .. include:: ../README.rst
 .. include:: wiki/Usage.rst
+.. include:: ../CHANGES.rst
 
 .. toctree::
    :maxdepth: 2
