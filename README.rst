@@ -4,8 +4,17 @@ Feature Toggle
 
 Feature Toggle is a simple Django app based on the behavioural pattern `Feature Toggle <https://martinfowler.com/articles/feature-toggles.html>`_ proposed by Martin Fowler.
 
-Detailed documentation is `here <https://thulasi-ram.github.io/django-feature-toggle>`_
-.
+Quick links
+===========
+    PyPi: `https://pypi.org/project/django-feature-toggle/ <https://pypi.org/project/django-feature-toggle/>`_
+
+
+    Source: `https://github.com/thulasi-ram/django-feature-toggle <https://github.com/thulasi-ram/django-feature-toggle>`_
+
+
+    Docs: `https://thulasi-ram.github.io/django-feature-toggle <https://thulasi-ram.github.io/django-feature-toggle>`_
+
+
 
 Quickstart
 ==========
