@@ -26,3 +26,7 @@ class BaseToggle(object):
     @abc.abstractmethod
     def is_enabled(self):
         raise NotImplementedError('Subclasses must define is_enabled method')
+
+    def __bool__(self):
+        return self.is_active()
+    __nonzero__=__bool__
