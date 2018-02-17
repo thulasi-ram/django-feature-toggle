@@ -4,7 +4,8 @@ from __future__ import unicode_literals
 from django.contrib import admin
 
 # Register your models here.
-from feature_toggle.models import FeatureToggle, FeatureToggleAttribute
+from feature_toggle.models.featuretoggle import FeatureToggle
+from feature_toggle.models.featuretoggle_attribute import FeatureToggleAttribute
 
 
 class FeatureToggleAttributesAdminInline(admin.TabularInline):

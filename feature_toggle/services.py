@@ -6,7 +6,7 @@ import logging
 
 from feature_toggle import constants
 from feature_toggle.exceptions import FeatureToggleDoesNotExist, FeatureToggleAlreadyExists
-from feature_toggle.models import FeatureToggle
+from feature_toggle.models.featuretoggle import FeatureToggle
 from feature_toggle.utilities import format_to_date
 
 logger = logging.getLogger(__name__)

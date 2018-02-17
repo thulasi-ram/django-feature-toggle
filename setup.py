@@ -34,5 +34,6 @@ setup(
     install_requires=[
         'Django>=1.8',
         'djutil',
+        'future',
     ],
 )
