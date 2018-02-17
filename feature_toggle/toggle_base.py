@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import abc
 
 
@@ -29,4 +31,5 @@ class BaseToggle(object):
 
     def __bool__(self):
         return self.is_active()
-    __nonzero__=__bool__
+
+    __nonzero__ = __bool__
