@@ -11,6 +11,7 @@ from feature_toggle.models.featuretoggle_attribute import FeatureToggleAttribute
 class FeatureToggleAttributesAdminInline(admin.TabularInline):
     model = FeatureToggleAttribute
     extra = 0
+    min_num = 1
 
 
 class FeatureToggleAdmin(admin.ModelAdmin):
