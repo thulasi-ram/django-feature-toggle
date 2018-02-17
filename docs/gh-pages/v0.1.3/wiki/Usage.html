@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Usage &mdash; Feature Toggle 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/banner.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Feature Toggle 0.1 documentation" href="../index.html"/>
+        <link rel="next" title="Changelog" href="Changelog.html"/>
+        <link rel="prev" title="Feature Toggle" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Feature Toggle
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Feature Toggle</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#models">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-methods">Basic methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-toggles">Custom Toggles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-environments">Custom Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-attributes">Custom Attributes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Feature Toggle</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/wiki/Usage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+
+
+    
+    
+
+
+
+    <p class="scv-banner scv-sphinx_rtd_theme"><a href="../../master/wiki/Usage.html"><b>Warning:</b> This document is for an old version of Feature Toggle. The main version is master.</a></p>
+<div class="section" id="usage">
+<span id="id1"></span><h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>Toggle is the class that should be used in the code.
+for ex:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">feature_toggle.toggle</span> <span class="kn">import</span> <span class="n">Toggle</span>
+<span class="n">tgl</span> <span class="o">=</span> <span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now you can use this <code class="docutils literal"><span class="pre">tgl</span></code> anywhere even as dependency injection.</p>
+<p><code class="docutils literal"><span class="pre">name</span></code> can be descriptive.</p>
+<p><code class="docutils literal"><span class="pre">code</span></code> is only capital A-Z and underscore is allowed.</p>
+<p><code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">code</span></code> are optional but any one of them is mandatory. Getting a toggle by <code class="docutils literal"><span class="pre">code</span></code> is encouraged.
+for ex:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default initializing a non-existing that has not been created already will raise custom exception <code class="docutils literal"><span class="pre">FeatureToggleDoesNotExist</span></code>. To suppress it you can send <code class="docutils literal"><span class="pre">raise_does_not_exist</span></code> while initialization</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tgl</span> <span class="o">=</span> <span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">,</span> <span class="n">raise_does_not_exist</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will create a toggle runtime and will let you do your work. But if you want to persist your toggle you can use</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tgl</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>But beware creating a toggle that already exists will raise <code class="docutils literal"><span class="pre">FeatureToggleAlreadyExists</span></code>.</p>
+<div class="section" id="models">
+<h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">FeatureToggle</span></code> - The actual class where the toggles are stored.</p>
+<p><code class="docutils literal"><span class="pre">FeatureToggleAttribute</span></code> - All the attributes for a particular feature toggle can be put here. For ex: <code class="docutils literal"><span class="pre">start_date</span></code> and <code class="docutils literal"><span class="pre">end_date.</span></code></p>
+<p>These can be set through the admin panel under the FeatureToggle section</p>
+</div>
+<div class="section" id="basic-methods">
+<h2>Basic methods<a class="headerlink" href="#basic-methods" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">tgl.is_active()</span></code>: Checks the active status of a toggle</p>
+<p><code class="docutils literal"><span class="pre">tgl.is_enabled()</span></code>: Checks the active status and validation if any of start_date and end_date are present in the attributes.</p>
+<p>All the other attributes set in the FeatureToggleAttribute model can be accessed directly via <code class="docutils literal"><span class="pre">tgl.&lt;attribute</span> <span class="pre">name&gt;</span></code></p>
+<p>for ex: if start_date is set in FeatureToggleAttribute. it can be accessed as <code class="docutils literal"><span class="pre">tgl.start_date.</span></code></p>
+<p>Admin will provide an intutive interface to set attributes via inline formsets. If you want to set them programatically send <code class="docutils literal"><span class="pre">attributes</span></code> as a dict while initializing a toggle.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tgl</span> <span class="o">=</span> <span class="n">Toggle</span><span class="p">(</span><span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;TESTING&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>this can then be accessed as</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tgl</span><span class="o">.</span><span class="n">module</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-toggles">
+<h2>Custom Toggles<a class="headerlink" href="#custom-toggles" title="Permalink to this headline">¶</a></h2>
+<p>You can always extend the <code class="docutils literal"><span class="pre">Toggle</span></code> class to suit your business logic. And you can use the services provided in <code class="docutils literal"><span class="pre">FeatureToggleService</span></code> (in <code class="docutils literal"><span class="pre">feature_toggle.services</span></code>) for flexibility.</p>
+<p>The contract is bound to an interface <code class="docutils literal"><span class="pre">BaseToggle</span></code> (in <code class="docutils literal"><span class="pre">feature_toggle.toggle_base</span></code>). If you need to implement a barebone toggle, that should be a subclass of this toggle.</p>
+</div>
+<div class="section" id="custom-environments">
+<h2>Custom Environments<a class="headerlink" href="#custom-environments" title="Permalink to this headline">¶</a></h2>
+<p>If you feel the default environments are not suitable for you. Please set a choice tuple for <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_CUSTOM_ENV_CHOICES</span></code> in settings.</p>
+<p>Note that these custom choices will be appended to the default choices. If in case you want to have only your custom choices, set <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_DEFAULT_ENV_CHOICES=()</span></code> in your settings.</p>
+<p>Services will make an assertion for valid environments.</p>
+</div>
+<div class="section" id="custom-attributes">
+<h2>Custom Attributes<a class="headerlink" href="#custom-attributes" title="Permalink to this headline">¶</a></h2>
+<p>Same as Environments if you need more attributes you should set <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_CUSTOM_ATTR_CHOICES</span></code> in settings.</p>
+<p>Note that these custom choices will be appended to the default choices. If in case you want to have only your custom choices, set <code class="docutils literal"><span class="pre">FEATURE_TOGGLE_DEFAULT_ATTR_CHOICES=()</span></code> in your settings.</p>
+<p>There is no assertion for now in attributes since the only way to add them is through admin. Overriding the default will affect the admin and new choices will be shown.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Feature Toggle" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Damodharan Thulasiram.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        <span class="fa fa-book"> Other Versions</span>
+        v: v0.1.3
+        <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Tags</dt>
+            <dd><a href="../../v0.1.2/wiki/Usage.html">v0.1.2</a></dd>
+            <dd><a href="Usage.html">v0.1.3</a></dd>
+        </dl>
+        <dl>
+            <dt>Branches</dt>
+            <dd><a href="../../master/wiki/Usage.html">master</a></dd>
+        </dl>
+    </div>
+</div>
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

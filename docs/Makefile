@@ -20,8 +20,8 @@ help:
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-   gh-pages:
-	sphinx-versioning build -b docs $(BUILDDIR)/html
+   custom-gh-pages:
+	sphinx-versioning build -b docs $(BUILDDIR)/html -w master
 	cp -rf $(BUILDDIR)/html/ $(GH_PAGES)
 	git add $(GH_PAGES)
 	git commit -m "Generated gh-pages"
