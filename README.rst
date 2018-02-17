@@ -50,7 +50,7 @@ Generating Docs
 ===============
 
 1. cd to ``docs\``
-2. run ``make gh-pages`` or ``make build``
+2. run ``make custom-gh-pages``
 3. The current state of docs is a mix of ``gh-pages`` and ``wiki``
 4. Docs are generated using sphinx. Generates files read from ``index.rst`` to ``_build`` directory.
-5. ``make gh-pages`` custom command copies ``_build`` to ``gh-pages`` directory and commits it which is used by github docs.
+5. ``make custom-gh-pages`` custom command copies ``_build`` to ``gh-pages`` directory and commits it which is used by github docs.
