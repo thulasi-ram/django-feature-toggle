@@ -3,12 +3,12 @@
 import datetime
 import logging
 
-from django.db import IntegrityError
-
 from feature_toggle import constants
 from feature_toggle.exceptions import FeatureToggleDoesNotExist, FeatureToggleAlreadyExists
 from feature_toggle.models import FeatureToggle
 from feature_toggle.utilities import format_to_date
+
+logger = logging.getLogger(__name__)
 
 
 class FeatureToggleService(object):
@@ -19,8 +19,43 @@ class FeatureToggleService(object):
     """
 
     @classmethod
+    def get_toggle(cls, name, code, env, raise_does_not_exist=True):
+        data = dict(name=name, code=code, environment=env, raise_does_not_exist=raise_does_not_exist)
+        return cls._get_toggle(**data)
+
+    @classmethod
+    def get_toggle_by_name(cls, name, env, raise_does_not_exist=True):
+        data = dict(name=name, environment=env, raise_does_not_exist=raise_does_not_exist)
+        return cls._get_toggle(**data)
+
+    @classmethod
+    def get_toggle_by_code(cls, code, env, raise_does_not_exist=True):
+        data = dict(code=code, environment=env, raise_does_not_exist=raise_does_not_exist)
+        return cls._get_toggle(**data)
+
+    @classmethod
+    def create_toggle(cls, name, code, env, attributes=None):
+        """
+        Creates a toggle and sets its attributes
+        :param name: Name of the toggle
+        :param code: Code of the toggle
+        :param env: env of the toggle
+        :param attributes: Dict of any attributes to be set on the toggle.
+        :return: FeatureToggle object
+        """
+        tgl = cls._create_toggle(**dict(name=name, code=code, environment=env))
+        if attributes:
+            cls.set_attributes(tgl=tgl, attributes=attributes, update_if_existing=False)
+        return tgl
+
+    @classmethod
+    def set_attributes(cls, tgl, attributes, update_if_existing):
+        assert isinstance(attributes, dict)
+        for key, value in attributes.items():
+            tgl.set_attribute(key, value, update_if_existing=update_if_existing)
+
+    @classmethod
     def _get_toggle(cls, **kwargs):
-        logger = logging.getLogger(cls.__name__)
 
         # extracting from kwargs
         env = kwargs.get('environment')
@@ -38,19 +73,11 @@ class FeatureToggleService(object):
             return FeatureToggle(**kwargs)
 
     @classmethod
-    def get_toggle(cls, name, code, env, raise_does_not_exist=True):
-        data = dict(name=name, code=code, environment=env, raise_does_not_exist=raise_does_not_exist)
-        return cls._get_toggle(**data)
+    def _create_toggle(cls, **kwargs):
 
-    @classmethod
-    def get_toggle_by_name(cls, name, env, raise_does_not_exist=True):
-        data = dict(name=name, environment=env, raise_does_not_exist=raise_does_not_exist)
-        return cls._get_toggle(**data)
-
-    @classmethod
-    def get_toggle_by_code(cls, code, env, raise_does_not_exist=True):
-        data = dict(code=code, environment=env, raise_does_not_exist=raise_does_not_exist)
-        return cls._get_toggle(**data)
+        if FeatureToggle.objects.filter(**kwargs).exists():
+            raise FeatureToggleAlreadyExists(**kwargs)
+        return FeatureToggle.objects.create(**kwargs)
 
     @classmethod
     def is_active(cls, feature_toggle):
@@ -73,8 +100,6 @@ class FeatureToggleService(object):
         :return: Boolean
         """
         assert isinstance(feature_toggle, FeatureToggle)
-
-        logger = logging.getLogger(cls.__name__)
 
         try:
             if cls.is_active(feature_toggle):
@@ -100,34 +125,3 @@ class FeatureToggleService(object):
             raise
 
         return False
-
-    @classmethod
-    def _create_toggle(cls, **kwargs):
-        logger = logging.getLogger(cls.__name__)
-        try:
-            return FeatureToggle.objects.create(**kwargs)
-        except IntegrityError as e:
-            logger.exception('Unable to create Feature Toggle for data: {d} due to {e}'.format(d=kwargs, e=repr(e)))
-            # TODO: assuming already exists? or should we go with get_or_create and raise exception
-            raise FeatureToggleAlreadyExists(**kwargs)
-
-    @classmethod
-    def create_toggle(cls, name, code, env, attributes=None):
-        """
-        Creates a toggle and sets its attributes
-        :param name: Name of the toggle
-        :param code: Code of the toggle
-        :param env: env of the toggle
-        :param attributes: Dict of any attributes to be set on the toggle.
-        :return: FeatureToggle object
-        """
-        tgl = cls._create_toggle(**dict(name=name, code=code, environment=env))
-        if attributes:
-            cls.set_attributes(tgl=tgl, attributes=attributes, update_if_existing=False)
-        return tgl
-
-    @classmethod
-    def set_attributes(cls, tgl, attributes, update_if_existing):
-        assert isinstance(attributes, dict)
-        for key, value in attributes.items():
-            tgl.set_attribute(key, value, update_if_existing=update_if_existing)
