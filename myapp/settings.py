@@ -120,3 +120,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 INSTALLED_APPS = INSTALLED_APPS + ['feature_toggle']
+MIDDLEWARE_CLASSES = MIDDLEWARE # backwards compatability
