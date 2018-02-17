@@ -3,6 +3,14 @@ Changelog
 =========
 
 
+0.1.3
+=====
+Added:
+    * Python 3 compatibility
+    * Django 2.0 Compatability
+    * Now users can use `if tgl` instead of `tgl.is_active`
+
+
 0.1.2
 =====
 Added:
