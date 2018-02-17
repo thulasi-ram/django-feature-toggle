@@ -18,3 +18,4 @@ class FeatureToggleAttribute(TimeStampedModel):
 
     class Meta:
         unique_together = ('feature_toggle', 'key')
+        managed = False

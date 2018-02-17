@@ -25,6 +25,7 @@ class FeatureToggle(TimeStampedModel):
 
     class Meta:
         unique_together = (('name', 'environment'), ('code', 'environment'))
+        managed = False
 
     def set_attribute(self, key, value=None, update_if_existing=True):
         """
