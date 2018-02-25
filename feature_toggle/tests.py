@@ -6,7 +6,7 @@ from django.test import TestCase
 
 from feature_toggle import constants
 from feature_toggle.exceptions import FeatureToggleDoesNotExist, FeatureToggleAlreadyExists
-from feature_toggle.models import FeatureToggle
+from feature_toggle.models.featuretoggle import FeatureToggle
 from feature_toggle.toggle import Toggle
 
 

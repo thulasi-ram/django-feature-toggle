@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from djutil.models import TimeStampedModel
 
-from feature_toggle.exceptions import FeatureToggleAttributeDoesNotExist, FeatureToggleAttributeAlreadyExists
 from feature_toggle import constants
+from feature_toggle.exceptions import FeatureToggleAttributeDoesNotExist, FeatureToggleAttributeAlreadyExists
 from feature_toggle.utilities import format_to_date
 from feature_toggle.validators import validate_feature_toggle_code
 
@@ -23,6 +25,7 @@ class FeatureToggle(TimeStampedModel):
 
     class Meta:
         unique_together = (('name', 'environment'), ('code', 'environment'))
+        managed = False
 
     def set_attribute(self, key, value=None, update_if_existing=True):
         """

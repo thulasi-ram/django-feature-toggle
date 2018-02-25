@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 from feature_toggle.exceptions import FeatureToggleAttributeDoesNotExist, FeatureToggleAlreadyExists
 from feature_toggle.services import FeatureToggleService
