@@ -179,8 +179,8 @@
 <p>Docs: <a class="reference external" href="https://thulasi-ram.github.io/django-feature-toggle">https://thulasi-ram.github.io/django-feature-toggle</a></p>
 </div></blockquote>
 </div>
-<div class="section" id="quickstart">
-<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
 <li><p class="first">Install the package <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">django-feature-toggle</span></code></p>
 </li>
@@ -196,6 +196,29 @@
 </li>
 <li><p class="first">Start your app to use the feature_toggle.</p>
 </li>
+</ol>
+</div>
+<div class="section" id="quick-setup">
+<h2>Quick Setup<a class="headerlink" href="#quick-setup" title="Permalink to this headline">¶</a></h2>
+<p>For people intrested in contributing:</p>
+<ol class="arabic simple">
+<li>Make a virtual environment</li>
+<li>run <code class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code> or <code class="docutils literal"><span class="pre">python3</span> <span class="pre">setup.py</span> <span class="pre">install</span></code></li>
+<li>run <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> or <code class="docutils literal"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code></li>
+<li>Make your changes and run tests by doing steps <code class="docutils literal"><span class="pre">5</span></code> and <code class="docutils literal"><span class="pre">6</span></code></li>
+<li><code class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">py2_django_app</span></code> and run <code class="docutils literal"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">test</span></code> make sure you have python 2 in your environment</li>
+<li><code class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">py3_django_app</span></code> and run <code class="docutils literal"><span class="pre">python3</span> <span class="pre">manage.py</span> <span class="pre">test</span></code> make sure you have python 3 in your environment</li>
+<li><code class="docutils literal"><span class="pre">5</span></code> and <code class="docutils literal"><span class="pre">6</span></code> will be mitigated in the near future by tox or by using travis.</li>
+</ol>
+</div>
+<div class="section" id="generating-docs">
+<h2>Generating Docs<a class="headerlink" href="#generating-docs" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>cd to <code class="docutils literal"><span class="pre">docs\</span></code></li>
+<li>run <code class="docutils literal"><span class="pre">make</span> <span class="pre">custom-gh-pages</span></code></li>
+<li>The current state of docs is a mix of <code class="docutils literal"><span class="pre">gh-pages</span></code> and <code class="docutils literal"><span class="pre">wiki</span></code></li>
+<li>Docs are generated using sphinx. Generates files read from <code class="docutils literal"><span class="pre">index.rst</span></code> to <code class="docutils literal"><span class="pre">_build</span></code> directory.</li>
+<li><code class="docutils literal"><span class="pre">make</span> <span class="pre">custom-gh-pages</span></code> custom command copies <code class="docutils literal"><span class="pre">_build</span></code> to <code class="docutils literal"><span class="pre">gh-pages</span></code> directory and commits it which is used by github docs.</li>
 </ol>
 <div class="toctree-wrapper compound">
 </div>
