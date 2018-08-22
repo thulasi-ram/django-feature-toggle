@@ -36,3 +36,18 @@ def make_meanigful_id(string, length=10, cast_uppercase=True):
     _hash = cheap_hash(string + str(time.time()), length=int(math.ceil(length * 0.6)))
     _id = '{s}{h}'.format(s=_short, h=_hash)[:length]
     return _id.upper() if cast_uppercase else _id
+
+
+class Container:
+
+    def __init__(self, items):
+        self.items = frozenset(items)
+
+    def __iter__(self):
+        return iter(self.items)
+
+    def __hash__(self):
+        return hash(self.items)
+
+    def __len__(self):
+        return len(self.items)
