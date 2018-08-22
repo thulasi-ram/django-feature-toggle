@@ -3,11 +3,11 @@ from __future__ import unicode_literals
 
 import datetime
 import logging
+import warnings
 
-from feature_toggle import constants
+from constants import Environments
 from feature_toggle.exceptions import FeatureToggleDoesNotExist, FeatureToggleAlreadyExists
 from feature_toggle.models.featuretoggle import FeatureToggle
-from feature_toggle.utilities import format_to_date
 
 logger = logging.getLogger(__name__)
 
@@ -15,19 +15,22 @@ logger = logging.getLogger(__name__)
 class FeatureToggleService(object):
 
     @classmethod
-    def get_toggle(cls, name, code, env, raise_does_not_exist=True):
-        data = dict(name=name, code=code, environment=env, raise_does_not_exist=raise_does_not_exist)
-        return cls._get_toggle(**data)
+    def get_toggle_from_db(cls, uid=None, name=None, environment=None):
 
-    @classmethod
-    def get_toggle_by_name(cls, name, env, raise_does_not_exist=True):
-        data = dict(name=name, environment=env, raise_does_not_exist=raise_does_not_exist)
-        return cls._get_toggle(**data)
+        if uid:
+            query = {'uid': uid}
+        elif name and environment:
+            assert environment in Environments
+            query = {'name': name, 'environment': environment}
+        else:
+            raise RuntimeError('Either uid or (name, environment) is mandatory')
 
-    @classmethod
-    def get_toggle_by_code(cls, code, env, raise_does_not_exist=True):
-        data = dict(code=code, environment=env, raise_does_not_exist=raise_does_not_exist)
-        return cls._get_toggle(**data)
+        try:
+            return FeatureToggle.objects.get(**query)
+        except FeatureToggle.DoesNotExist:
+            msg = 'Feature for args: {arg} does not exist.'.format(arg=query)
+            warnings.warn(msg)
+            raise FeatureToggleDoesNotExist(msg)
 
     @classmethod
     def create_toggle(cls, name, code, env, attributes=None):
@@ -57,34 +60,12 @@ class FeatureToggleService(object):
         env = kwargs.get('environment')
         raise_does_not_exist = kwargs.pop('raise_does_not_exist', True)
 
-        assert any(env in en for en in constants.FeatureToggle.Environment.CHOICES)
-
-        try:
-            return FeatureToggle.objects.get(**kwargs)
-        except FeatureToggle.DoesNotExist:
-            logger.warn('Feature for args: {arg} does not exist.'.format(arg=kwargs))
-            if raise_does_not_exist:
-                raise FeatureToggleDoesNotExist(**kwargs)
-            logger.warn('Suppressing does not exist')
-            return FeatureToggle(**kwargs)
-
     @classmethod
     def _create_toggle(cls, **kwargs):
 
         if FeatureToggle.objects.filter(**kwargs).exists():
             raise FeatureToggleAlreadyExists(**kwargs)
         return FeatureToggle.objects.create(**kwargs)
-
-    @classmethod
-    def is_active(cls, feature_toggle):
-        """
-        *WARNING*: Only checks for the is_active flag. Ignores start_date and end_date check.
-        For complete check see is_enabled
-        :param feature_toggle: Object of FeatureToggle
-        :return: Boolean
-        """
-        assert isinstance(feature_toggle, FeatureToggle)
-        return feature_toggle.is_active
 
     @classmethod
     def is_enabled(cls, feature_toggle, validation_date=datetime.datetime.now().date()):

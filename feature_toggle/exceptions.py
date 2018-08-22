@@ -7,10 +7,7 @@ class FeatureToggleDoesNotExist(Exception):
     This exception is to aid consumers in providing an common exception to catch instead of relying on
     model.DoesNotExist.
     """
-
-    def __init__(self, **kwargs):
-        msg = 'FeatureToggle cannot be created with data: {d}'.format(d=kwargs)
-        super(FeatureToggleDoesNotExist, self).__init__(self, msg)
+    pass
 
 
 class FeatureToggleAlreadyExists(Exception):

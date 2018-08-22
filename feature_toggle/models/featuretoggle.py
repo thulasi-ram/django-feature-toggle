@@ -8,7 +8,7 @@ from djutil.models import TimeStampedModel
 
 from constants import Environments
 from feature_toggle.exceptions import FeatureToggleAttributeDoesNotExist, FeatureToggleAttributeAlreadyExists
-from utilities import django_model_choices_from_iterable
+from utilities import django_model_choices_from_iterable, make_meanigful_id
 
 CHOICES = django_model_choices_from_iterable(getattr(settings, 'FEATURE_TOGGLE_ENV_CHOICES', Environments))
 
@@ -21,6 +21,15 @@ class FeatureToggle(TimeStampedModel):
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(auto_now_add=True)
     time_bomb = models.BooleanField(default=False)
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if not self.uid:
+            self.internal_id = make_meanigful_id(self.name, length=10)
+        super().save(force_insert=force_insert,
+                     force_update=force_update,
+                     using=using,
+                     update_fields=update_fields,
+                     )
 
     def __str__(self):
         return "{e}: {n}({u})".format(e=self.environment, n=self.name, u=self.uid)
