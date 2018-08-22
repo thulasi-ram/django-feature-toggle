@@ -1,44 +1,38 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from djutil.models import TimeStampedModel
 
-from feature_toggle import constants
+from constants import Environments
 from feature_toggle.exceptions import FeatureToggleAttributeDoesNotExist, FeatureToggleAttributeAlreadyExists
-from feature_toggle.utilities import format_to_date
-from feature_toggle.validators import validate_feature_toggle_code
+from utilities import django_model_choices_from_iterable
+
+CHOICES = django_model_choices_from_iterable(getattr(settings, 'FEATURE_TOGGLE_ENV_CHOICES', Environments))
 
 
 class FeatureToggle(TimeStampedModel):
+    uid = models.CharField(max_length=20)
     name = models.CharField(max_length=20)
-    code = models.CharField(max_length=20, validators=[validate_feature_toggle_code])
-    environment = models.CharField(max_length=50, choices=constants.FeatureToggle.Environment.CHOICES)
+    environment = models.CharField(max_length=50, choices=CHOICES)
     is_active = models.BooleanField(default=True)
+    start_date = models.DateTimeField(auto_now_add=True)
+    end_date = models.DateTimeField(auto_now_add=True)
+    time_bomb = models.BooleanField(default=False)
 
     def __str__(self):
-        return "{name}({code}) | {env}".format(name=self.name, code=self.code, env=self.environment)
+        return "{e}: {n}({u})".format(e=self.environment, n=self.name, u=self.uid)
 
     def __unicode__(self):
-        return "{name}({code}) | {env}".format(name=self.name, code=self.code, env=self.environment)
+        return self.__str__()
 
     class Meta:
-        unique_together = (('name', 'environment'), ('code', 'environment'))
-        managed = False
+        unique_together = (('name', 'environment'), ('uid',))
+        managed = True
 
     def set_attribute(self, key, value=None, update_if_existing=True):
-        """
-        sets up the given an attribute. If existing will update else will create.
-
-        :param key: name of the attribute
-        :param value: value of the attribute
-        :param update_if_existing: If false will raise Exception
-        """
-        # todo: assert for key types?
-        if key in (constants.FeatureToggle.Attributes.START_DATE, constants.FeatureToggle.Attributes.END_DATE):
-            value = format_to_date(value) if value else value
-
         attrib, created = self.attributes.get_or_create(key=key)
         if not created and not update_if_existing:
             raise FeatureToggleAttributeAlreadyExists(**dict(key=key))
@@ -47,12 +41,6 @@ class FeatureToggle(TimeStampedModel):
         attrib.save()
 
     def get_attribute(self, key, raise_does_not_exist=False):
-        """
-        gets the value of the attribute
-        :param key: name of the attribute
-        :return: value or None
-        """
-
         try:
             attr = self.attributes.get(key=key)
             return attr.value
@@ -60,11 +48,3 @@ class FeatureToggle(TimeStampedModel):
             if raise_does_not_exist:
                 FeatureToggleAttributeDoesNotExist(**dict(key=key))
             return None
-
-    @property
-    def start_date(self):
-        return self.get_attribute(constants.FeatureToggle.Attributes.START_DATE)
-
-    @property
-    def end_date(self):
-        return self.get_attribute(constants.FeatureToggle.Attributes.END_DATE)

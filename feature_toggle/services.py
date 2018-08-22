@@ -13,11 +13,6 @@ logger = logging.getLogger(__name__)
 
 
 class FeatureToggleService(object):
-    """
-    This service is especially to be dealt with Feature Toggles.
-
-    All interfaces to the model is supposed to go through this method.
-    """
 
     @classmethod
     def get_toggle(cls, name, code, env, raise_does_not_exist=True):

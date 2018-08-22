@@ -9,27 +9,20 @@ class BaseToggle(object):
     Interface for implementing toggle class
     """
 
-    @abc.abstractproperty
-    def name(self):
-        raise NotImplementedError('Subclasses must define name property')
+    def __init__(self, uid, name, environment, is_active, start_date=None, end_date=None, time_bomb=None, **kwargs):
+        self.uid = uid
+        self.name = name
+        self.environment = environment
+        self.is_active = is_active
 
-    @abc.abstractproperty
-    def code(self):
-        raise NotImplementedError('Subclasses must define code property')
+        self.start_date = start_date
+        self.end_date = end_date
+        self.time_bomb = time_bomb
 
-    @abc.abstractproperty
-    def environment(self):
-        raise NotImplementedError('Subclasses must define environment property')
-
-    @abc.abstractmethod
-    def is_active(self):
-        raise NotImplementedError('Subclasses must define is_active method')
+        self.kwargs = kwargs
 
     @abc.abstractmethod
-    def is_enabled(self):
-        raise NotImplementedError('Subclasses must define is_enabled method')
-
     def __bool__(self):
-        return self.is_active()
+        pass
 
     __nonzero__ = __bool__
