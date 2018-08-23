@@ -3,9 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-# Register your models here.
-from feature_toggle.models.featuretoggle import FeatureToggle
-from feature_toggle.models.featuretoggle_attribute import FeatureToggleAttribute
+from models import FeatureToggleAttribute, FeatureToggle
 
 
 class FeatureToggleAttributesAdminInline(admin.TabularInline):
@@ -20,7 +18,7 @@ class FeatureToggleAdmin(admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super(FeatureToggleAdmin, self).get_readonly_fields(request, obj)
         if obj:
-            readonly_fields += ('code',)
+            readonly_fields += ('uid',)
         return readonly_fields
 
 

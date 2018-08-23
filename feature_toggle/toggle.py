@@ -10,6 +10,18 @@ class BaseToggle(object):
     Interface for implementing toggle class
     """
 
+    class Attributes(object):
+        def __init__(self, attribs):
+            assert isinstance(attribs, dict)
+
+            self.attribs = attribs
+
+        def __getattr__(self, item):
+            try:
+                return self.attribs[item]
+            except KeyError:
+                raise AttributeError(item)
+
     def __init__(self, uid, name, environment, is_active, attributes=None, **kwargs):
         self.uid = uid
         self.name = name
@@ -17,8 +29,7 @@ class BaseToggle(object):
         self.is_active = is_active
 
         if attributes:
-            assert isinstance(attributes, dict)
-            self.attributes = attributes
+            self.attributes = self.Attributes(attributes)
 
         self.kwargs = kwargs
 

@@ -6,36 +6,37 @@ from django.conf import settings
 from utilities import Container
 
 
-class Environment:
-    LOCAL = 'local'
-    DEV = 'dev'
-    PREPROD = 'preprod'
-    PROD = 'prod'
+class Attribute(Container):
+    Module = 'module'
+
+    Default = [
+        Module,
+    ]
+
+    Custom = getattr(settings, 'FEATURE_TOGGLE_ATTR_CHOICES', None)
+
+    def __init__(self):
+        super().__init__(items=self.Custom or self.Default)
 
 
-class Attribute:
-    MODULE = 'module'
+class Environment(Container):
+    Local = 'local'
+    Dev = 'dev'
+    Preprod = 'preprod'
+    Prod = 'prod'
+
+    Default = [
+        Local,
+        Dev,
+        Preprod,
+        Prod,
+    ]
+
+    Custom = getattr(settings, 'FEATURE_TOGGLE_ENV_CHOICES', None)
+
+    def __init__(self):
+        super().__init__(items=self.Custom or self.Default)
 
 
-DefaultEnvironments = [
-    Environment.LOCAL,
-    Environment.DEV,
-    Environment.PREPROD,
-    Environment.PROD,
-]
-
-DefaultAttributes = [
-    Attribute.MODULE,
-]
-
-
-class AttribContainer(Container):
-    pass
-
-
-class EnvContainer(Container):
-    pass
-
-
-Environments = EnvContainer(getattr(settings, 'FEATURE_TOGGLE_ENV_CHOICES', DefaultEnvironments))
-Attributes = AttribContainer(getattr(settings, 'FEATURE_TOGGLE_ATTR_CHOICES', DefaultAttributes))
+Environments = Environment()
+Attributes = Attribute()
