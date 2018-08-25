@@ -6,6 +6,7 @@ from django.conf import settings
 from .utilities import Container
 
 
+# pylint: disable=invalid-name
 class Attribute(Container):
     Module = 'module'
 
@@ -16,9 +17,10 @@ class Attribute(Container):
     Custom = getattr(settings, 'FEATURE_TOGGLE_ATTR_CHOICES', None)
 
     def __init__(self):
-        super().__init__(items=self.Custom or self.Default)
+        super(Attribute).__init__(items=self.Custom or self.Default)
 
 
+# pylint: disable=invalid-name
 class Environment(Container):
     Local = 'local'
     Dev = 'dev'
@@ -35,7 +37,7 @@ class Environment(Container):
     Custom = getattr(settings, 'FEATURE_TOGGLE_ENV_CHOICES', None)
 
     def __init__(self):
-        super().__init__(items=self.Custom or self.Default)
+        super(Environment).__init__(items=self.Custom or self.Default)
 
 
 Environments = Environment()

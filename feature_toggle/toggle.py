@@ -42,6 +42,7 @@ class BaseToggle(object):
     __nonzero__ = __bool__
 
 
+# pylint: disable=too-many-arguments
 class Toggle(BaseToggle):
     """
     This is a time bomb toggle by default.
@@ -64,10 +65,10 @@ class Toggle(BaseToggle):
         self.start_date_time = start_date_time
         self.end_date_time = end_date_time
         self.time_bomb = time_bomb
-        super().__init__(uid, name, environment, is_active, attributes, **kwargs)
+        super(Toggle).__init__(uid, name, environment, is_active, attributes, **kwargs)
 
     def __bool__(self):
-        active = super().__bool__()
+        active = super(Toggle).__bool__()
         now = datetime.utcnow()
 
         if not active:

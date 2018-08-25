@@ -38,7 +38,7 @@ def make_meanigful_id(string, length=10, cast_uppercase=True):
     return _id.upper() if cast_uppercase else _id
 
 
-class Container:
+class Container(object):
 
     def __init__(self, items):
         self.items = frozenset(items)

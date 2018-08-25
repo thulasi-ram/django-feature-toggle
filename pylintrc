@@ -56,6 +56,7 @@ disable=missing-docstring,
         no-self-use,
         cyclic-import, # https://github.com/PyCQA/pylint/issues/850
         duplicate-code, # https://github.com/PyCQA/pylint/pull/1055
+        too-few-public-methods,
 
 
 enable=import-error,
@@ -214,7 +215,6 @@ enable=import-error,
        not-async-context-manager,
        yield-inside-async-function,
        broad-except,
-       too-few-public-methods,
 
 # Needs investigation:
 # abstract-method (might be indicating a bug? probably not though)
@@ -404,7 +404,7 @@ name-group=
 include-naming-hint=no
 
 # Regular expression matching correct function names
-function-rgx=[a-z_][a-z0-9_]{2,30}$
+function-rgx=[a-z_][a-z0-9_]{2,45}$
 
 # Naming hint for function names
 function-name-hint=[a-z_][a-z0-9_]{2,30}$
