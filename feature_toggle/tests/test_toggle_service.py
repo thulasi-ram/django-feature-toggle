@@ -9,19 +9,31 @@ from feature_toggle import constants
 from feature_toggle.exceptions import FeatureToggleDoesNotExist, FeatureToggleAlreadyExists
 from feature_toggle.models import FeatureToggle
 from feature_toggle.toggle import Toggle
+from services import FeatureToggleService
 
 
 class TestToggleService(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.active_ft_tgl = FeatureToggle.objects.create(name='test1', code='test1', environment=Environments.Local)
-        cls.inactive_ft_tgl = FeatureToggle.objects.create(name='test2', code='test2',
-                                                           is_active=False,
-                                                           environment=Environments.Local)
+        cls.active_tgl = FeatureToggle.objects.create(
+            uid='test1',
+            name='test1',
+            environment=Environments.Local,
+            is_active=True,
+        )
+        cls.inactive_tgl = FeatureToggle.objects.create(
+            uid='test1',
+            name='test1',
+            environment=Environments.Local,
+            is_active=False,
+        )
 
     @classmethod
     def tearDownClass(cls):
         FeatureToggle.objects.all().delete()
+
+    def test_when_toggle_in_db_then_get_from_uid(self):
+        FeatureToggleService.get(uid='test1')
 
     def test_toggle_without_name_and_code(self):
         with self.assertRaises(RuntimeError):
