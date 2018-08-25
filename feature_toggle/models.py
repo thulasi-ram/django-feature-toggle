@@ -32,7 +32,7 @@ class FeatureToggle(TimeStampedModel):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.uid:
             self.uid = make_meanigful_id(self.name, length=5)
-        super(FeatureToggle).save(force_insert, force_update, using, update_fields)
+        super().save(force_insert, force_update, using, update_fields)
 
     def set_attribute(self, key, value=None, update_if_existing=True):
         attrib, created = self.attributes.get_or_create(key=key)

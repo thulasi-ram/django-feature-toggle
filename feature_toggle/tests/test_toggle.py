@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from constants import Environments
+from feature_toggle.constants import Environments
 from feature_toggle.toggle import Toggle
 
 

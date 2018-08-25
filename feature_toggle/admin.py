@@ -16,7 +16,7 @@ class FeatureToggleAdmin(admin.ModelAdmin):
     inlines = [FeatureToggleAttributesAdminInline]
 
     def get_readonly_fields(self, request, obj=None):
-        readonly_fields = super(FeatureToggleAdmin, self).get_readonly_fields(request, obj)
+        readonly_fields = super().get_readonly_fields(request, obj)
         if obj:
             readonly_fields += ('uid',)
         return readonly_fields

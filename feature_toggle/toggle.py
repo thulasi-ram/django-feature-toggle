@@ -65,10 +65,10 @@ class Toggle(BaseToggle):
         self.start_date_time = start_date_time
         self.end_date_time = end_date_time
         self.time_bomb = time_bomb
-        super(Toggle).__init__(uid, name, environment, is_active, attributes, **kwargs)
+        super().__init__(uid, name, environment, is_active, attributes, **kwargs)
 
     def __bool__(self):
-        active = super(Toggle).__bool__()
+        active = super().__bool__()
         now = datetime.utcnow()
 
         if not active:

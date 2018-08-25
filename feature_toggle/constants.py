@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-
-
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 
 from .utilities import Container
 
@@ -14,10 +13,14 @@ class Attribute(Container):
         Module,
     ]
 
-    Custom = getattr(settings, 'FEATURE_TOGGLE_ATTR_CHOICES', None)
+    try:
+        Custom = getattr(settings, 'FEATURE_TOGGLE_ATTR_CHOICES', None)
+    except ImproperlyConfigured:
+        # for unittests
+        Custom = None
 
     def __init__(self):
-        super(Attribute).__init__(items=self.Custom or self.Default)
+        super().__init__(self.Custom or self.Default)
 
 
 # pylint: disable=invalid-name
@@ -34,10 +37,14 @@ class Environment(Container):
         Prod,
     ]
 
-    Custom = getattr(settings, 'FEATURE_TOGGLE_ENV_CHOICES', None)
+    try:
+        Custom = getattr(settings, 'FEATURE_TOGGLE_ENV_CHOICES', None)
+    except ImproperlyConfigured:
+        # for unittests
+        Custom = None
 
     def __init__(self):
-        super(Environment).__init__(items=self.Custom or self.Default)
+        super().__init__(self.Custom or self.Default)
 
 
 Environments = Environment()
