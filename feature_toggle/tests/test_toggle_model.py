@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 import datetime
 from django.test import TestCase
@@ -155,7 +155,7 @@ class TestToggle(TestCase):
         ft_tgl = self.active_ft_tgl
         ft_tgl.set_attribute(constants.FeatureToggle.Attributes.TIME_BOMB, time_bomb)
         tgl = Toggle(environment=ft_tgl.environment, name=ft_tgl.name, code=ft_tgl.code)
-        self.assertEquals(getattr(tgl, constants.FeatureToggle.Attributes.TIME_BOMB), time_bomb)
+        self.assertEqual(getattr(tgl, constants.FeatureToggle.Attributes.TIME_BOMB), time_bomb)
 
     def _toggle_equality_test(self, tgl, ft_tgl):
         self.assertEqual(tgl.code, ft_tgl.code)
@@ -180,8 +180,8 @@ class TestToggle(TestCase):
         code = 'TEST3'
         tgl = Toggle(environment=self.active_ft_tgl.environment, name=name, code=code, raise_does_not_exist=False)
         tgl.create()
-        self.assertEquals(tgl.name, name)
-        self.assertEquals(tgl.code, code)
+        self.assertEqual(tgl.name, name)
+        self.assertEqual(tgl.code, code)
 
     def test_creating_non_existing_toggle_with_attributes(self):
         name = 'test5'
@@ -191,6 +191,6 @@ class TestToggle(TestCase):
         tgl = Toggle(environment=self.active_ft_tgl.environment, name=name, code=code,
                      attributes={attrib_key: attrib_value}, raise_does_not_exist=False)
         tgl.create()
-        self.assertEquals(tgl.name, name)
-        self.assertEquals(tgl.code, code)
-        self.assertEquals(getattr(tgl, attrib_key), attrib_value)
+        self.assertEqual(tgl.name, name)
+        self.assertEqual(tgl.code, code)
+        self.assertEqual(getattr(tgl, attrib_key), attrib_value)

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 from django.conf import settings
 from django.db import models
 from djutil.models import TimeStampedModel
 
-from constants import Environments, Attributes
+from .constants import Environments, Attributes
 from feature_toggle.exceptions import FeatureToggleAttributeAlreadyExists
-from utilities import django_model_choices_from_iterable, make_meanigful_id
+from .utilities import django_model_choices_from_iterable, make_meanigful_id
 
 ENV_CHOICES = django_model_choices_from_iterable(Environments)
 ATTRIB_CHOICES = django_model_choices_from_iterable(Attributes)

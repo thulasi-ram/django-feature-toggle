@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 import warnings
 from datetime import datetime
 
-from constants import Environments
+from .constants import Environments
 
 
 class BaseToggle(object):

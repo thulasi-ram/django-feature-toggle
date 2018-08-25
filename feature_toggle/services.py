@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 import logging
 
 from feature_toggle.constants import Environments
 from feature_toggle.exceptions import FeatureToggleDoesNotExist
 from feature_toggle.toggle import BaseToggle, Toggle
-from models import FeatureToggle
+from .models import FeatureToggle
 
 logger = logging.getLogger(__name__)
 
