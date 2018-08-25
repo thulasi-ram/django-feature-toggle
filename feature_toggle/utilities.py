@@ -4,8 +4,14 @@
 import math
 import time
 
+import datetime
 import hashlib
+import pytz
 from django.utils.crypto import get_random_string
+
+
+def utc_now():
+    return datetime.datetime.now(tz=pytz.utc)
 
 
 def django_model_choices_from_iterable(iterable):

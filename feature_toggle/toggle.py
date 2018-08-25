@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 
+import datetime
 import warnings
-from datetime import datetime
 
-from .constants import Environments
+from feature_toggle.constants import Environments
+from feature_toggle.utilities import utc_now
 
 
 class BaseToggle(object):
@@ -42,8 +43,31 @@ class BaseToggle(object):
     __nonzero__ = __bool__
 
 
-# pylint: disable=too-many-arguments
 class Toggle(BaseToggle):
+
+    def __init__(self, uid, name, environment, is_active,
+                 start_date_time, end_date_time,
+                 attributes=None, **kwargs):
+        assert isinstance(start_date_time, datetime.datetime)  # should be a time stamp
+        assert start_date_time.tzinfo is not None  # should have a time zone. otherwise causes confusions
+        self.start_date_time = start_date_time
+
+        assert isinstance(end_date_time, datetime.datetime)  # should be a time stamp
+        assert end_date_time.tzinfo is not None  # should have a time zone. otherwise causes confusions
+        self.end_date_time = end_date_time
+        super().__init__(uid, name, environment, is_active, attributes, **kwargs)
+
+    def __bool__(self):
+        active = super().__bool__()
+
+        if self.end_date_time and self.end_date_time < utc_now():
+            # this check because toggles can quickly get overwhelming
+            warnings.warn('{t} has expired. Get rid of me and help me attain salvation'.format(t=str(self)))
+
+        return active
+
+
+class TimeBombToggle(Toggle):
     """
     This is a time bomb toggle by default.
 
@@ -57,28 +81,9 @@ class Toggle(BaseToggle):
 
     """
 
-    def __init__(self, uid, name, environment, is_active,
-                 start_date_time, end_date_time, time_bomb=True,
-                 attributes=None, **kwargs):
-        if time_bomb and not (start_date_time or end_date_time):
-            raise RuntimeError('Start date and end date is mandatory for a time bomb')
-        self.start_date_time = start_date_time
-        self.end_date_time = end_date_time
-        self.time_bomb = time_bomb
-        super().__init__(uid, name, environment, is_active, attributes, **kwargs)
-
     def __bool__(self):
         active = super().__bool__()
-        now = datetime.utcnow()
 
-        if not active:
-            return False
-
-        if self.end_date_time and self.end_date_time < datetime.utcnow():
-            # this check because toggles can quickly get overwhelming
-            warnings.warn('{t} has expired. Get rid of me and help me attain salvation')
-
-        if not self.time_bomb:
-            return True
-
-        return self.start_date_time <= now <= self.end_date_time
+        if active:
+            return self.start_date_time <= utc_now() <= self.end_date_time
+        return active

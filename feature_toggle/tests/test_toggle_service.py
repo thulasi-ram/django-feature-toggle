@@ -11,7 +11,7 @@ from feature_toggle.models import FeatureToggle
 from feature_toggle.toggle import Toggle
 
 
-class TestToggle(TestCase):
+class TestToggleService(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.active_ft_tgl = FeatureToggle.objects.create(name='test1', code='test1', environment=Environments.Local)
