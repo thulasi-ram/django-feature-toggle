@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import datetime
 from django.test import TestCase
 
+from constants import Environments
 from feature_toggle import constants
 from feature_toggle.exceptions import FeatureToggleDoesNotExist, FeatureToggleAlreadyExists
 from feature_toggle.models import FeatureToggle
@@ -13,10 +14,10 @@ from feature_toggle.toggle import Toggle
 class TestToggle(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.active_ft_tgl = FeatureToggle.objects.create(name='test1', code='test1',
-                                                         environment=constants.FeatureToggle.Environment.LOCAL)
-        cls.inactive_ft_tgl = FeatureToggle.objects.create(name='test2', code='test2', is_active=False,
-                                                           environment=constants.FeatureToggle.Environment.LOCAL)
+        cls.active_ft_tgl = FeatureToggle.objects.create(name='test1', code='test1', environment=Environments.Local)
+        cls.inactive_ft_tgl = FeatureToggle.objects.create(name='test2', code='test2',
+                                                           is_active=False,
+                                                           environment=Environments.Local)
 
     @classmethod
     def tearDownClass(cls):

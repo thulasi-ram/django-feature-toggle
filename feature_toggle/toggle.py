@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 import warnings
 from datetime import datetime
 
+from constants import Environments
+
 
 class BaseToggle(object):
     """
@@ -25,6 +27,7 @@ class BaseToggle(object):
     def __init__(self, uid, name, environment, is_active, attributes=None, **kwargs):
         self.uid = uid
         self.name = name
+        assert environment in Environments
         self.environment = environment
         self.is_active = is_active
 
