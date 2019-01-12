@@ -1,46 +1,51 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+
+from .utilities import Container
 
 
-class FeatureToggle(object):
-    date_format = '%Y-%m-%d'
+# pylint: disable=invalid-name
+class Attribute(Container):
+    Module = 'module'
 
-    class Environment:
-        LOCAL = 'local'
-        DEV = 'dev'
-        PREPROD = 'preprod'
-        PROD = 'prod'
+    Default = [
+        Module,
+    ]
 
-        _default_choices = tuple([(x, x) for x in [LOCAL, DEV, PREPROD, PROD]])
+    try:
+        Custom = getattr(settings, 'FEATURE_TOGGLE_ATTR_CHOICES', None)
+    except ImproperlyConfigured:
+        # for unittests
+        Custom = None
 
-        DEFAULT_CHOICES = getattr(settings, 'FEATURE_TOGGLE_DEFAULT_ENV_CHOICES', _default_choices)
+    def __init__(self):
+        super().__init__(self.Custom or self.Default)
 
-        CUSTOM_CHOICES = getattr(settings, 'FEATURE_TOGGLE_CUSTOM_ENV_CHOICES', ())
 
-        try:
-            CHOICES = DEFAULT_CHOICES + CUSTOM_CHOICES
-        except TypeError:
-            raise RuntimeError("Default/Custom Choices for environments should be a tuple of tuple")
+# pylint: disable=invalid-name
+class Environment(Container):
+    Local = 'local'
+    Dev = 'dev'
+    Preprod = 'preprod'
+    Prod = 'prod'
 
-    class Attributes:
-        DEFAULT_FT_ATTRIBUTE_KEY_LENGTH = 100
-        DEFAULT_FT_ATTRIBUTE_VALUE_LENGTH = 1000
+    Default = [
+        Local,
+        Dev,
+        Preprod,
+        Prod,
+    ]
 
-        MODULE = 'module'
-        START_DATE = 'start_date'
-        END_DATE = 'end_date'
-        TIME_BOMB = 'time_bomb'
+    try:
+        Custom = getattr(settings, 'FEATURE_TOGGLE_ENV_CHOICES', None)
+    except ImproperlyConfigured:
+        # for unittests
+        Custom = None
 
-        _default_choices = tuple([(x, x) for x in [MODULE, START_DATE, END_DATE, TIME_BOMB]])
+    def __init__(self):
+        super().__init__(self.Custom or self.Default)
 
-        DEFAULT_CHOICES = getattr(settings, 'FEATURE_TOGGLE_DEFAULT_ATTR_CHOICES', _default_choices)
 
-        CUSTOM_CHOICES = getattr(settings, 'FEATURE_TOGGLE_CUSTOM_ATTR_CHOICES', ())
-
-        try:
-            CHOICES = DEFAULT_CHOICES + CUSTOM_CHOICES
-        except TypeError:
-            raise RuntimeError("Default/Custom choices for attributes must be an iterable containing "
-                               "(actual value, human readable name) tuples.")
+Environments = Environment()
+Attributes = Attribute()

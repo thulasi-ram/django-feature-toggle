@@ -1,26 +1,39 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 import datetime
 from django.test import TestCase
 
+from constants import Environments
 from feature_toggle import constants
 from feature_toggle.exceptions import FeatureToggleDoesNotExist, FeatureToggleAlreadyExists
-from feature_toggle.models.featuretoggle import FeatureToggle
+from feature_toggle.models import FeatureToggle
 from feature_toggle.toggle import Toggle
+from services import FeatureToggleService
 
 
-class TestToggle(TestCase):
+class TestToggleService(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.active_ft_tgl = FeatureToggle.objects.create(name='test1', code='test1',
-                                                         environment=constants.FeatureToggle.Environment.LOCAL)
-        cls.inactive_ft_tgl = FeatureToggle.objects.create(name='test2', code='test2', is_active=False,
-                                                           environment=constants.FeatureToggle.Environment.LOCAL)
+        cls.active_tgl = FeatureToggle.objects.create(
+            uid='test1',
+            name='test1',
+            environment=Environments.Local,
+            is_active=True,
+        )
+        cls.inactive_tgl = FeatureToggle.objects.create(
+            uid='test1',
+            name='test1',
+            environment=Environments.Local,
+            is_active=False,
+        )
 
     @classmethod
     def tearDownClass(cls):
         FeatureToggle.objects.all().delete()
+
+    def test_when_toggle_in_db_then_get_from_uid(self):
+        FeatureToggleService.get(uid='test1')
 
     def test_toggle_without_name_and_code(self):
         with self.assertRaises(RuntimeError):
@@ -154,7 +167,7 @@ class TestToggle(TestCase):
         ft_tgl = self.active_ft_tgl
         ft_tgl.set_attribute(constants.FeatureToggle.Attributes.TIME_BOMB, time_bomb)
         tgl = Toggle(environment=ft_tgl.environment, name=ft_tgl.name, code=ft_tgl.code)
-        self.assertEquals(getattr(tgl, constants.FeatureToggle.Attributes.TIME_BOMB), time_bomb)
+        self.assertEqual(getattr(tgl, constants.FeatureToggle.Attributes.TIME_BOMB), time_bomb)
 
     def _toggle_equality_test(self, tgl, ft_tgl):
         self.assertEqual(tgl.code, ft_tgl.code)
@@ -179,8 +192,8 @@ class TestToggle(TestCase):
         code = 'TEST3'
         tgl = Toggle(environment=self.active_ft_tgl.environment, name=name, code=code, raise_does_not_exist=False)
         tgl.create()
-        self.assertEquals(tgl.name, name)
-        self.assertEquals(tgl.code, code)
+        self.assertEqual(tgl.name, name)
+        self.assertEqual(tgl.code, code)
 
     def test_creating_non_existing_toggle_with_attributes(self):
         name = 'test5'
@@ -190,6 +203,6 @@ class TestToggle(TestCase):
         tgl = Toggle(environment=self.active_ft_tgl.environment, name=name, code=code,
                      attributes={attrib_key: attrib_value}, raise_does_not_exist=False)
         tgl.create()
-        self.assertEquals(tgl.name, name)
-        self.assertEquals(tgl.code, code)
-        self.assertEquals(getattr(tgl, attrib_key), attrib_value)
+        self.assertEqual(tgl.name, name)
+        self.assertEqual(tgl.code, code)
+        self.assertEqual(getattr(tgl, attrib_key), attrib_value)
