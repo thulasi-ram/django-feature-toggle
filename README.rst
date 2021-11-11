@@ -48,7 +48,10 @@ For people intrested in contributing:
 
 Generating Docs
 ===============
+Handled by: https://readthedocs.org/projects/django-feature-toggle
 
+
+Legacy
 1. cd to ``docs\``
 2. run ``make custom-gh-pages``
 3. The current state of docs is a mix of ``gh-pages`` and ``wiki``
