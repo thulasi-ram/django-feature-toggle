@@ -12,7 +12,7 @@ Quick links
     Source: `https://github.com/thulasi-ram/django-feature-toggle <https://github.com/thulasi-ram/django-feature-toggle>`_
 
 
-    Docs: `https://thulasi-ram.github.io/django-feature-toggle <https://thulasi-ram.github.io/django-feature-toggle>`_
+    Docs: `https://django-feature-toggle.readthedocs.io/en/latest/ <https://django-feature-toggle.readthedocs.io/en/latest/>`_
 
 
 
